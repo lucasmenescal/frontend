@@ -1,35 +1,35 @@
 import React, { Component } from 'react';
 import api from './api'
 
-class App extends Component{
-  state={
+class UserList extends Component {
+  state = {
     users: [],
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     const response = await api.get('');
-    
     this.setState({ users: response.data })
   }
 
-  render(){
-    const { users } = this.state;
-    console.log(users);
+  render() {
+    var { users } = this.state;
+    const myObjStr = JSON.stringify(users);
+    const obj = JSON.parse(myObjStr);
+    console.log(myObjStr);
+    console.log(JSON.parse(myObjStr));
 
-    {users.map( user => (
-      <li key={user.name.id}>
-        <h2>
-          <strong>Nome: </strong>
-          {user.name.id}
-        </h2>
-      </li>
-    ))}
-    return(
-      <div>
-        <h1>Listagem</h1>
+
+    const listUsers = obj.map((user) =>
+      <div key={user.toString()}>
+        <li>{user.name}</li>
+        <li>{user.username}</li>
       </div>
     );
-  };
-};
+    return (
+      <ul>{listUsers}</ul>
+    );
 
-export default App;
+  };
+}
+
+export default UserList;
