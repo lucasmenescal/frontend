@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import api from './api'
+import { Link } from "react-router-dom";
+
 
 class UserList extends Component {
   state = {
@@ -7,26 +9,42 @@ class UserList extends Component {
   }
 
   async componentDidMount() {
-    const response = await api.get('');
-    this.setState({ users: response.data })
+    try {
+      const response = await api.get('');
+      this.setState({ users: response.data })
+    } catch (error) { console.log(error) }
   }
 
+  
   render() {
-    var { users } = this.state;
+    const { users } = this.state;
     const myObjStr = JSON.stringify(users);
     const obj = JSON.parse(myObjStr);
     console.log(myObjStr);
     console.log(JSON.parse(myObjStr));
 
-
     const listUsers = obj.map((user) =>
       <div key={user.toString()}>
-        <li>{user.name}</li>
-        <li>{user.username}</li>
+        <Link
+          to={
+            {
+              pathname: `/viewuserdetails/${user.id}`,
+              state: { users: user },
+            }
+          }>
+          {user.name}
+        </Link>
+
       </div>
     );
     return (
-      <ul>{listUsers}</ul>
+      <div>
+        <ul>
+          {listUsers}
+        </ul>
+      </div>
+
+
     );
 
   };

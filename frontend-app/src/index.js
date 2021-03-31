@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import UserList from './App';
-
+import Routes from './Routes';
 
 ReactDOM.render(
-  <UserList />,
+  <Routes />,
   document.getElementById('root')
 );
