@@ -1,14 +1,13 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-
-
+import Button from '@material-ui/core/Button';
+import { Link } from "react-router-dom";
 
 const ViewUserDetails = _ => {
   const { state } = useLocation();
 
   return (
-
-    <div>
+    <div class="userdetails">
       <div>
         <strong>Id:</strong> {state.users.id}{" "}
       </div>
@@ -54,8 +53,18 @@ const ViewUserDetails = _ => {
       <div>
         <strong>Company bs:</strong> {state.users.company.bs}{" "}
       </div>
+      <div>
+        <Button variant="contained" color="primary" href="#contained-buttons">
+          <Link to={{ pathname: `/` }}>
+            Voltar
+        </Link>
+        </Button>
+      </div>
     </div>
+
   );
+
 };
+
 
 export default ViewUserDetails;

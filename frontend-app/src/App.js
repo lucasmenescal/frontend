@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import api from './api'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import * as Icon from 'react-bootstrap-icons';
+import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
-
 
 class UserList extends Component {
   state = {
@@ -15,7 +17,7 @@ class UserList extends Component {
     } catch (error) { console.log(error) }
   }
 
-  
+
   render() {
     const { users } = this.state;
     const myObjStr = JSON.stringify(users);
@@ -24,27 +26,45 @@ class UserList extends Component {
     console.log(JSON.parse(myObjStr));
 
     const listUsers = obj.map((user) =>
-      <div key={user.toString()}>
-        <Link
-          to={
-            {
-              pathname: `/viewuserdetails/${user.id}`,
-              state: { users: user },
-            }
-          }>
-          {user.name}
-        </Link>
 
-      </div>
+      <tbody key={user.toString()}>
+        <tr>
+          <th scope="row">{user.id}</th>
+          <td>{user.name}</td>
+          <td>{user.email}</td>
+          <td>{user.phone}</td>
+          <td>
+            <Link to={
+                {
+                  pathname: `/viewuserdetails/${user.id}`,
+                  state: { users: user },
+                }
+              }><Button><Icon.Search />
+            </Button>
+            </Link>
+            <Button><Icon.Pencil /></Button>
+            <Button><Icon.Trash /></Button>
+          </td>
+        </tr>
+      </tbody>
     );
+
     return (
-      <div>
-        <ul>
+      <div className='app'>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">NAME</th>
+              <th scope="col">EMAIL</th>
+              <th scope="col">PHONE</th>
+              <th scope="col">ACTIONS</th>
+              <th scope="col">CADASTRO</th>
+            </tr>
+          </thead>
           {listUsers}
-        </ul>
+        </table >
       </div>
-
-
     );
 
   };
