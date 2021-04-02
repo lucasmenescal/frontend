@@ -2,65 +2,66 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
+import { ListGroup } from 'react-bootstrap';
 
 const ViewUserDetails = _ => {
   const { state } = useLocation();
 
   return (
-    <div class="userdetails">
-      <div>
+    <ListGroup>
+      <ListGroup.Item>
         <strong>Id:</strong> {state.users.id}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Name:</strong> {state.users.name}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Username:</strong> {state.users.username}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Email:</strong> {state.users.email}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Street:</strong> {state.users.address.street}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Suite:</strong> {state.users.address.suite}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>City:</strong> {state.users.address.city}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Zipcode:</strong> {state.users.address.zipcode}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Lat:</strong> {state.users.address.geo.lat}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Lng:</strong> {state.users.address.geo.lng}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Phone:</strong> {state.users.phone}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Website:</strong> {state.users.website}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Company Name:</strong> {state.users.company.name}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Company CatchPhrase:</strong> {state.users.company.catchPhrase}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <strong>Company bs:</strong> {state.users.company.bs}{" "}
-      </div>
-      <div>
+      </ListGroup.Item>
+      <ListGroup.Item>
         <Button variant="contained" color="primary" href="#contained-buttons">
           <Link to={{ pathname: `/` }}>
             Voltar
         </Link>
         </Button>
-      </div>
-    </div>
+      </ListGroup.Item>
+    </ListGroup>
 
   );
 

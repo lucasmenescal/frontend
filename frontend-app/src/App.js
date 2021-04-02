@@ -1,33 +1,46 @@
 import React, { Component } from 'react';
-import api from './api'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as Icon from 'react-bootstrap-icons';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 class UserList extends Component {
   state = {
     users: [],
   }
+  listUser
+  user;
+  componentDidMount() {
+    axios.get(`https://jsonplaceholder.typicode.com/users`)
+      .then(res => {
+        const users = res.data;
+        this.setState({ users });
+      })
+  }
 
-  async componentDidMount() {
-    try {
-      const response = await api.get('');
-      this.setState({ users: response.data })
-    } catch (error) { console.log(error) }
+  handleEdit(id) {
+    return () => {
+      var newEditListUser = this.state.users[id-1];
+      console.log(newEditListUser.name);
+      this.setState({ newEditListUser });
+    }
+  };
+
+  handleDelete(id) {
+    return () => {
+      const newListUser = delete this.state.users[id - 1];
+      console.log(this.state.users);
+      this.setState({ newListUser })
+    }
   }
 
 
+
   render() {
-    const { users } = this.state;
-    const myObjStr = JSON.stringify(users);
-    const obj = JSON.parse(myObjStr);
-    console.log(myObjStr);
-    console.log(JSON.parse(myObjStr));
+    const listUsers = this.state.users.map((user) =>
 
-    const listUsers = obj.map((user) =>
-
-      <tbody key={user.toString()}>
+      <tbody key={user.id}>
         <tr>
           <th scope="row">{user.id}</th>
           <td>{user.name}</td>
@@ -35,15 +48,16 @@ class UserList extends Component {
           <td>{user.phone}</td>
           <td>
             <Link to={
-                {
-                  pathname: `/viewuserdetails/${user.id}`,
-                  state: { users: user },
-                }
-              }><Button><Icon.Search />
-            </Button>
+              {
+                pathname: `/viewuserdetails/${user.id}`,
+                state: { users: user },
+              }
+            }>
+              <Button><Icon.Search />
+              </Button>
             </Link>
-            <Button><Icon.Pencil /></Button>
-            <Button><Icon.Trash /></Button>
+            <Button onClick={this.handleEdit(user.id)}><Icon.Pencil /></Button>
+            <Button onClick={this.handleDelete(user.id)}><Icon.Trash /></Button>
           </td>
         </tr>
       </tbody>
