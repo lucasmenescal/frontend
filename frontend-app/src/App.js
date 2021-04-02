@@ -1,14 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as Icon from 'react-bootstrap-icons';
-import Button from '@material-ui/core/Button';
+import { Button, Modal, Form, ModalBody } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import ModalEditUser from './modalEdit';
 
+
+/* Puxa os dados da API*/
 class UserList extends Component {
   state = {
     users: [],
+    show: false,
   }
+
+
+
   listUser
   user;
   componentDidMount() {
@@ -18,24 +25,33 @@ class UserList extends Component {
         this.setState({ users });
       })
   }
-
+  /* Edita o cadastro do cliente localmente */
   handleEdit(id) {
     return () => {
-      var newEditListUser = this.state.users[id-1];
-      console.log(newEditListUser.name);
+      var newEditListUser = this.state.users[id - 1];
       this.setState({ newEditListUser });
     }
   };
-
+  /* Deleta o cadastro do cliente localmente */
   handleDelete(id) {
     return () => {
       const newListUser = delete this.state.users[id - 1];
-      console.log(this.state.users);
       this.setState({ newListUser })
     }
   }
 
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+  handleSubmit(event) {
+    alert('Um nome foi enviado: ' + this.state.value);
+    event.preventDefault();
+  }
 
+  
+  handleModal() {
+
+  }
 
   render() {
     const listUsers = this.state.users.map((user) =>
@@ -47,33 +63,50 @@ class UserList extends Component {
           <td>{user.email}</td>
           <td>{user.phone}</td>
           <td>
-            <Link to={
-              {
-                pathname: `/viewuserdetails/${user.id}`,
-                state: { users: user },
-              }
-            }>
+            <Link to={`/viewuserdetails/${user.id}`}>
               <Button><Icon.Search />
               </Button>
             </Link>
-            <Button onClick={this.handleEdit(user.id)}><Icon.Pencil /></Button>
-            <Button onClick={this.handleDelete(user.id)}><Icon.Trash /></Button>
+          </td>
+          <td>
+            <Button onClick={ }><Icon.Pencil /></Button>
+            <Modal>
+              <ModalBody>
+                
+                  <Form onSubmit={this.handleEdit(user.id)}>
+                    <label>
+                      Nome:
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                    </label>
+                    <input type="submit" value="Enviar" />
+                  </Form>
+                
+              </ModalBody>
+            </Modal>
+          </td>
+          <td>
+            <Button onClick={this.handleDelete(user.id)}><Icon.Trash /></Button>  
           </td>
         </tr>
-      </tbody>
+      </tbody >
     );
 
     return (
+      /* Cabeçalho da 1a Tela */
       <div className='app'>
-        <table class="table table-striped">
+        <table className="table table-striped">
           <thead>
             <tr>
               <th scope="col">ID</th>
               <th scope="col">NAME</th>
               <th scope="col">EMAIL</th>
               <th scope="col">PHONE</th>
-              <th scope="col">ACTIONS</th>
-              <th scope="col">CADASTRO</th>
+              <th scope="col">DETAILS</th>
+              <th scope="col">EDIT</th>
+              <th scope="col">DELETE</th>
+              <th scope="col">
+                <Button>Cadastro</Button>
+              </th>
             </tr>
           </thead>
           {listUsers}

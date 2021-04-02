@@ -10,7 +10,6 @@ export default function Routes() {
     <Router>
       <Route exact path="/" component={UserList} />
       <Route path="/viewuserdetails/:id" component={ViewUserDetails} />
-      
     </Router>
   );
 }
